@@ -1,7 +1,8 @@
 version: 0.2
 phases:
   install:
-    # buildspec.yamlからバージョンを取得するために、yqコマンドをインストールする
+    # flutterモジュールのpubspec.yamlからバージョンを取得するために
+    # yqコマンドをインストールする
     commands:
       - apt update
       - apt install -y gnupg2
@@ -9,9 +10,11 @@ phases:
       - add-apt-repository -y ppa:rmescandon/yq
       - apt install yq -y
   build:
+    # AARを作成する
     commands:
       - flutter build aar --build-number `yq r pubspec.yaml version`
 artifacts:
+  # アーティファクトとしてS3にコピーするディレクトリを指定する
   files:
     - '**/*'
   base-directory: build/host/outputs/repo
