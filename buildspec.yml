@@ -3,3 +3,6 @@ phases:
   build:
     commands:
       - flutter build aar
+artifacts:
+  files:
+    - 'build/host/outputs/repo/**/*'
