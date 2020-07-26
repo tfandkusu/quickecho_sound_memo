@@ -67,8 +67,8 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body: Stack(children: [
         Padding(padding: EdgeInsets.only(top: 16.0, left: 16.0),
-              child:Text("↑ ToolbarはAndroidネイティブ",
-            style: TextStyle(color: Color.fromARGB(0,0,0,0), fontSize: 24))),
+              child:Text("AWS CodeBuild動作確認",
+            style: TextStyle(color: Colors.orange, fontSize: 24))),
         makeCenter()]),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
