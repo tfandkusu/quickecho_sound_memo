@@ -6,5 +6,4 @@ phases:
 artifacts:
   files:
     - '**/*'
-  base-directory:
-    - 'build/host/outputs/repo'
+  base-directory: build/host/outputs/repo
