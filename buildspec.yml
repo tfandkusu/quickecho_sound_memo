@@ -2,7 +2,7 @@ version: 0.2
 phases:
   build:
     commands:
-      - flutter build aar
+      - flutter build aar --build-number `yq r pubspec.yaml version`
 artifacts:
   files:
     - '**/*'
