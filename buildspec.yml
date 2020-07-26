@@ -3,9 +3,10 @@ phases:
   install:
     # buildspec.yamlからバージョンを取得するために、yqコマンドをインストールする
     commands:
-      - apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CC86BB64
-      - add-apt-repository ppa:rmescandon/yq
       - apt update
+      - apt install -y gnupg2
+      - apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CC86BB64
+      - add-apt-repository -y ppa:rmescandon/yq
       - apt install yq -y
   build:
     commands:
