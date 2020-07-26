@@ -1,5 +1,12 @@
 version: 0.2
 phases:
+  install:
+    # buildspec.yamlからバージョンを取得するために、yqコマンドをインストールする
+    commands:
+      - apt-key adv --keyserver keyserver.ubuntu.com --recv-keys CC86BB64
+      - add-apt-repository ppa:rmescandon/yq
+      - apt update
+      - apt install yq -y
   build:
     commands:
       - flutter build aar --build-number `yq r pubspec.yaml version`
