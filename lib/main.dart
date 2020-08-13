@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() => runApp(MyApp());
 
@@ -43,6 +46,24 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  static const _eventChannel =
+      const EventChannel('jp.bellware.echo.sound_memo:sound_memo');
+
+  StreamSubscription _streamSubscription;
+
+  @override
+  void initState() {
+    super.initState();
+    _streamSubscription =
+        _eventChannel.receiveBroadcastStream().listen((event) {
+      if (event is Map) {
+        print(event['id']);
+        print(event['fileName']);
+        print(event['date']);
+      }
+    });
+  }
+
   int _counter = 0;
 
   void _incrementCounter() {
@@ -66,17 +87,29 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
     return Scaffold(
       body: Stack(children: [
-        Padding(padding: EdgeInsets.only(top: 16.0, left: 16.0),
-              child:Text("AWS CodeBuild動作確認 0.0.2",
-            style: TextStyle(color: Colors.orange, fontSize: 24))),
-        makeCenter()]),
+        Padding(
+            padding: EdgeInsets.only(top: 16.0, left: 16.0),
+            child: Text("AWS CodeBuild動作確認 0.0.2",
+                style: TextStyle(color: Colors.orange, fontSize: 24))),
+        makeCenter()
+      ]),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ),
-      appBar: AppBar(title: Text('音声メモ', style: TextStyle(color: Colors.white))),
+      appBar:
+          AppBar(title: Text('音声メモ', style: TextStyle(color: Colors.white))),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    if (_streamSubscription != null) {
+      _streamSubscription.cancel();
+      _streamSubscription = null;
+    }
   }
 
   makeCenter() {
